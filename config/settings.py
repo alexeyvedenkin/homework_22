@@ -11,7 +11,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 DEBUG = True if os.getenv('DEBUG') == 'True' else False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -55,12 +55,12 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.getenv('NAME'),
-        "USER": os.getenv('USER'),
-        "PASSWORD": os.getenv('PASSWORD'),
-        "HOST": os.getenv('HOST'),
-        "PORT": os.getenv('PORT'),
+        # "ENGINE": "django.db.backends.postgresql_psycopg2",
+        # "NAME": os.getenv('NAME'),
+        # "USER": os.getenv('USER'),
+        # "PASSWORD": os.getenv('PASSWORD'),
+        # "HOST": os.getenv('HOST'),
+        # "PORT": os.getenv('PORT'),
     }
 }
 
@@ -84,7 +84,7 @@ LANGUAGE_CODE = "en-us"
 TIME_ZONE = "Europe/Moscow"
 
 USE_I18N = True
-USE_L18N = True
+USE_L10N = True
 
 USE_TZ = True
 
