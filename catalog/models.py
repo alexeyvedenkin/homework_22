@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Product(models):
+class Product(models.Model):
     name = models.CharField(
         max_length=100,
         verbose_name='Товар',
@@ -19,7 +19,7 @@ class Product(models):
     )
     category = models.ForeignKey(
         'Category',
-        on_delete=models.SET_NULL(),
+        on_delete=models.SET_NULL,
         max_length=100,
         verbose_name='Категория',
         help_text='Введите категорию товара'
@@ -49,7 +49,7 @@ class Product(models):
         return f'Наименование: {self.name}, цена: {self.price}'
 
 
-class Category(models):
+class Category(models.Model):
     name = models.CharField(
         max_length=100,
         verbose_name='Категория',
