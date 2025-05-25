@@ -1,3 +1,57 @@
 from django.db import models
 
-# Create your models here.
+
+class Product(models):
+    name = models.CharField(
+        max_length=100,
+        verbose_name='Товар',
+        help_text='Введите наименование товара'
+    )
+    description = models.TextField(
+        verbose_name='Описание',
+        help_text='Введите описание товара'
+    )
+    product_image = models.ImageField(
+        verbose_name='Изображение',
+        help_text='Загрузите изображение товара',
+        blank=True, null=True
+    )
+    category = models.ForeignKey(
+        'Category',
+        max_length=100,
+        verbose_name='Категория',
+        help_text='Введите категорию товара'
+    )
+    price = models.FloatField(
+        verbose_name='Цена',
+        help_text='Введите цену товара'
+    )
+    create_date = models.DateField(
+        verbose_name='Дата создания',
+        help_text='Введите дату создания товара'
+    )
+    update_date = models.DateField(
+        verbose_name='Дата последнего обновления',
+    )
+
+    class Meta:
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'
+        filter = ['category', 'name']
+
+
+class Category(models):
+    name = models.CharField(
+        max_length=100,
+        verbose_name='Категория',
+        help_text='Введите наименование категории'
+    )
+    description = models.TextField(
+        verbose_name='Описание',
+        help_text='Введите описание категории'
+    )
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+        filter = ['name']
