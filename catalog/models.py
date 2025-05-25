@@ -14,10 +14,12 @@ class Product(models):
     product_image = models.ImageField(
         verbose_name='Изображение',
         help_text='Загрузите изображение товара',
-        blank=True, null=True
+        blank=True,
+        null=True
     )
     category = models.ForeignKey(
         'Category',
+        on_delete=models.SET_NULL(),
         max_length=100,
         verbose_name='Категория',
         help_text='Введите категорию товара'
@@ -28,16 +30,23 @@ class Product(models):
     )
     create_date = models.DateField(
         verbose_name='Дата создания',
-        help_text='Введите дату создания товара'
+        help_text='Введите дату создания товара',
+        blank = True,
+        null = True
     )
     update_date = models.DateField(
         verbose_name='Дата последнего обновления',
+        blank = True,
+        null = True
     )
 
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
         filter = ['category', 'name']
+
+    def __str__(self):
+        return f'Наименование: {self.name}, цена: {self.price}'
 
 
 class Category(models):
@@ -55,3 +64,6 @@ class Category(models):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
         filter = ['name']
+
+    def __str__(self):
+        return f'Наименование категории: {self.name}'
