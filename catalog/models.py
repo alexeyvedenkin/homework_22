@@ -12,6 +12,7 @@ class Product(models.Model):
         help_text='Введите описание товара'
     )
     product_image = models.ImageField(
+        upload_to='products/images',
         verbose_name='Изображение',
         help_text='Загрузите изображение товара',
         blank=True,
@@ -23,6 +24,8 @@ class Product(models.Model):
         max_length=100,
         verbose_name='Категория',
         help_text='Введите категорию товара',
+        blank=True,
+        null=True,
         related_name = 'products',
     )
     price = models.FloatField(
