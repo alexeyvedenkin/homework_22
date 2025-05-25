@@ -22,7 +22,8 @@ class Product(models.Model):
         on_delete=models.SET_NULL,
         max_length=100,
         verbose_name='Категория',
-        help_text='Введите категорию товара'
+        help_text='Введите категорию товара',
+        related_name = 'products',
     )
     price = models.FloatField(
         verbose_name='Цена',
@@ -43,7 +44,7 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
-        filter = ['category', 'name']
+        ordering = ['category', 'name']
 
     def __str__(self):
         return f'Наименование: {self.name}, цена: {self.price}'
@@ -63,7 +64,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
-        filter = ['name']
+        ordering = ['name']
 
     def __str__(self):
         return f'Наименование категории: {self.name}'
