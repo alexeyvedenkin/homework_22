@@ -13,4 +13,4 @@ class Command(BaseCommand):
         Category.objects.all().delete()
 
         call_command('loaddata', 'catalog')
-        self.stdout.write(self.style.SUCCESS(f'Successfully loaded data.'))
+        self.stdout.write(self.style.SUCCESS('Successfully loaded data.'))

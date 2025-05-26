@@ -26,7 +26,7 @@ class Product(models.Model):
         help_text='Введите категорию товара',
         blank=True,
         null=True,
-        related_name = 'products',
+        related_name='products',
     )
     price = models.FloatField(
         verbose_name='Цена',
@@ -35,13 +35,13 @@ class Product(models.Model):
     create_date = models.DateField(
         verbose_name='Дата создания',
         help_text='Введите дату создания товара',
-        blank = True,
-        null = True
+        blank=True,
+        null=True
     )
     update_date = models.DateField(
         verbose_name='Дата последнего обновления',
-        blank = True,
-        null = True
+        blank=True,
+        null=True
     )
 
     class Meta:
