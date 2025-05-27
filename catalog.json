@@ -1,0 +1,83 @@
+[
+  {
+	"model": "catalog.product",
+	"pk": 4,
+	"fields": {
+	  "name": "Samsung Galaxy S23 Ultra",
+	  "description": "256GB, Серый цвет, 200MP камера",
+	  "product_image": "",
+	  "category": 3,
+	  "price": 180000.0,
+	  "create_date": "2025-05-25",
+	  "update_date": null
+	}
+  },
+  {
+	"model": "catalog.product",
+	"pk": 5,
+	"fields": {
+	  "name": "Iphone 15",
+	  "description": "512GB, Gray space",
+	  "product_image": "",
+	  "category": 3,
+	  "price": 210000.0,
+	  "create_date": "2025-05-25",
+	  "update_date": null
+	}
+  },
+  {
+	"model": "catalog.product",
+	"pk": 6,
+	"fields": {
+	  "name": "Xiaomi Redmi Note 11",
+	  "description": "1024GB, Синий",
+	  "product_image": "",
+	  "category": 3,
+	  "price": 31000.0,
+	  "create_date": "2025-05-25",
+	  "update_date": null
+	}
+  },
+  {
+	"model": "catalog.product",
+	"pk": 7,
+	"fields": {
+	  "name": "Газонная трава",
+	  "description": "Элитная трава для газона",
+	  "product_image": "",
+	  "category": 4,
+	  "price": 500.0,
+	  "create_date": "2025-05-25",
+	  "update_date": null
+	}
+  },
+  {
+	"model": "catalog.product",
+	"pk": 8,
+	"fields": {
+	  "name": "Газонная трава 2",
+	  "description": "Выносливая трава",
+	  "product_image": "",
+	  "category": 4,
+	  "price": 450.0,
+	  "create_date": "2025-05-25",
+	  "update_date": null
+	}
+  },
+  {
+	"model": "catalog.category",
+	"pk": 3,
+	"fields": {
+	  "name": "Смартфоны",
+	  "description": "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни"
+	}
+  },
+  {
+	"model": "catalog.category",
+	"pk": 4,
+	"fields": {
+	  "name": "Газонная трава",
+	  "description": "Различные виды газонной травы"
+	}
+  }
+]
