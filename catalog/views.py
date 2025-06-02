@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from catalog.models import Product
+
 
 def home(request):
     """ Выполняет переход к странице catalog/home.html """
@@ -20,3 +22,10 @@ def contact_answer(request):
         message = request.POST.get('message')
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
     return render(request, 'catalog/contacts.html')
+
+
+def product_detail(request):
+    """ Возвращает детальную информацию о товаре """
+    product = Product.object.get(pk=pk)
+    context= {'product': product}
+    return render(request, 'product_detail.html', context)
