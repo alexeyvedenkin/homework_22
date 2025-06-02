@@ -4,9 +4,9 @@ from django.shortcuts import render
 from catalog.models import Product
 
 
-def home(request):
-    """ Выполняет переход к странице catalog/home.html """
-    return render(request, 'catalog/home.html')
+def base(request):
+    """ Выполняет переход к странице catalog/base.html """
+    return render(request, 'catalog/base.html')
 
 
 def contacts(request):
