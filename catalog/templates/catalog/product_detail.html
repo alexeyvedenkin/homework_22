@@ -1,0 +1,26 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block title %}Контакты{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row text-center">
+        <div class="col-3">
+            <div class="card mb-4 box-shadow">
+                <img src="{{ product.photo | media_filter }}">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{ product.price }} р.</h1>
+                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                        <li>- Описание: {{ product.description | truncatechars:100 }}</li>
+                        <li>- Категория: {{ product.category }}</li>
+                    </ul>
+                    <a type="button" class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:product_detail' product.pk %}">Купить</a>
+                    <a type="button" class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:home' %}">Назад</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
