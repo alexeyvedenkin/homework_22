@@ -21,19 +21,19 @@ class ArticleDetailView(DetailView):
 
 class ArticleCreateView(CreateView):
     model = Article
-    fields = ("name", "description", "price", "create_date", "product_image")
-    success_url = reverse_lazy("catalog:product_list")
+    fields = ("title", "content", "views_counter", "create_at", "preview", "active_is")
+    success_url = reverse_lazy("blog:article_list")
 
 
 class ArticleUpdateView(UpdateView):
     model = Article
-    fields = ("name", "description", "price", "create_date", "product_image")
-    success_url = reverse_lazy("catalog:product_list")
+    fields = ("title", "content", "views_counter", "create_at", "preview", "active_is")
+    success_url = reverse_lazy("blog:article_list")
 
 
 class ArticleDeleteView(DeleteView):
     model = Article
-    success_url = reverse_lazy("catalog:product_list")
+    success_url = reverse_lazy("blog:article_list")
 
 
 class ContactsTemplateView(TemplateView):
