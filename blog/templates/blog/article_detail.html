@@ -1,0 +1,39 @@
+{% extends 'catalog/base.html' %}
+{% load blog_tags %}
+{% block content %}
+<div class="container">
+    <div class="row text-center">
+        <div class="col-3">
+            <div class="card mb-4 box-shadow">
+                {% if article.preview %}
+                    <img src="{{ article.preview | media_filter }}" width="150" style="height:auto;">
+                {% else %}
+                    <p>Нет изображения</p>
+                {% endif %}
+                <div class="card-header">
+                    <h2 class="my-0 font-weight-normal">{{ object.title }}</h2>
+                </div>
+                <div class="card-body">
+                    <div class="fields-container m-3">
+                        <div class="field">
+                            <p>
+                                <strong>Содержание:</strong>
+                                <span>{{ object.content }}</span>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <p>
+                                <strong>Количество просмотров:</strong>
+                                <span>{{ object.views_counter }}</span>
+                            </p>
+                        </div>
+                    </div>
+                    <p>Создано: {{ article.create_at }}</p>
+                    <a type="button" class="btn btn-lg btn-block btn-outline-primary" href="{% url 'blog:article_form' object.pk %}">Редактировать</a>
+                    <a type="button" class="btn btn-lg btn-block btn-outline-primary" href="{% url 'blog:article_list' %}">Назад</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

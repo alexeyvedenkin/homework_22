@@ -6,7 +6,11 @@
     <div class="row text-center">
         <div class="col-3">
             <div class="card mb-4 box-shadow">
-                <img src="{{ product.product_image | media_filter }}" width="150" style="height:auto;">
+                {% if product.product_image %}
+                    <img src="{{ product.product_image | media_filter }}" width="150" style="height:auto;">
+                {% else %}
+                    <p>Нет изображения</p>
+                {% endif %}
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">{{ object.name }}</h4>
                 </div>

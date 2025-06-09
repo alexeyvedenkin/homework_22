@@ -8,7 +8,11 @@
         <div class="col-3">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
-                    <img src="{{ product.product_image | media_filter }}" width="150" style="height:auto;">
+                    {% if product.product_image %}
+                        <img src="{{ product.product_image | media_filter }}" width="150" style="height:auto;">
+                    {% else %}
+                        <p>Нет изображения</p>
+                    {% endif %}
                     <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
                 </div>
                 <div class="card-body">
