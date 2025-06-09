@@ -9,11 +9,11 @@ from django.views.generic import (
 )
 
 from catalog.models import Product
-
+from catalog.forms import ProductForm
 
 class ProductListView(ListView):
     model = Product
-
+    context_object_name = 'products'
 
 class ProductDetailView(DetailView):
     model = Product
@@ -21,13 +21,15 @@ class ProductDetailView(DetailView):
 
 class ProductCreateView(CreateView):
     model = Product
-    fields = ("name", "description", "price", "create_date", "product_image")
+    form_class = ProductForm
+    template_name = 'catalog/product_form.html'
     success_url = reverse_lazy("catalog:product_list")
 
 
 class ProductUpdateView(UpdateView):
     model = Product
-    fields = ("name", "description", "price", "create_date", "product_image")
+    form_class = ProductForm
+    template_name = 'catalog/product_form.html'
     success_url = reverse_lazy("catalog:product_list")
 
 
