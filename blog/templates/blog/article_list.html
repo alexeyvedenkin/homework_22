@@ -1,0 +1,29 @@
+{% extends 'catalog/base.html' %}
+{% load blog_tags %}
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Наши статьи</h1>
+    <p><a type="button" class="btn btn-lg btn-block btn-outline-primary" href="{% url 'blog:article_create' %}">Добавить статью</a></p>
+    <div class="row text-center">
+        {% for article in object_list %}
+        <div class="col-3">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    {% if article.preview %}
+                        <img src="{{ article.preview | media_filter }}" width="150" style="height:auto;">
+                    {% else %}
+                        <p>Нет изображения</p>
+                    {% endif %}
+                    <h4 class="my-0 font-weight-normal">{{ article.title }}</h4>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title pricing-card-title">{{ article.content | truncatechars:100 }}</h3>
+                    <a type="button" class="btn btn-lg btn-block btn-outline-primary" href="{% url 'blog:article_detail' article.pk %}">Подробнее</a>
+                    <a type="button" class="btn btn-lg btn-block btn-outline-primary" href="{% url 'blog:article_delete' article.pk %}">Удалить</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

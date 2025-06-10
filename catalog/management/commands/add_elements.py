@@ -5,12 +5,12 @@ from catalog.models import Category, Product
 
 
 class Command(BaseCommand):
-    help = 'Загружает данные из фикстур в базу данных'
+    help = "Загружает данные из фикстур в базу данных"
 
     def handle(self, *args, **kwargs):
 
         Product.objects.all().delete()
         Category.objects.all().delete()
 
-        call_command('loaddata', 'catalog')
-        self.stdout.write(self.style.SUCCESS('Successfully loaded data.'))
+        call_command("loaddata", "catalog")
+        self.stdout.write(self.style.SUCCESS("Successfully loaded data."))

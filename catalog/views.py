@@ -1,22 +1,48 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    TemplateView,
+    UpdateView,
+)
+
+from catalog.models import Product
 
 
-def home(request):
-    """ Выполняет переход к странице catalog/home.html """
-    return render(request, 'catalog/home.html')
+class ProductListView(ListView):
+    model = Product
 
 
-def contacts(request):
-    """ Выполняет переход к странице catalog/contacts.html """
-    return render(request, 'catalog/contacts.html')
+class ProductDetailView(DetailView):
+    model = Product
 
 
-def contact_answer(request):
-    """ Выполняет запрос сообщения от пользователя.
-        Возвращает уведомление о получении данных """
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        message = request.POST.get('message')
-        return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
-    return render(request, 'catalog/contacts.html')
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ("name", "description", "price", "create_date", "product_image")
+    success_url = reverse_lazy("catalog:product_list")
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ("name", "description", "price", "create_date", "product_image")
+    success_url = reverse_lazy("catalog:product_list")
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    success_url = reverse_lazy("catalog:product_list")
+
+
+class ContactsTemplateView(TemplateView):
+    """Выполняет переход к странице catalog/contacts.html"""
+
+    template_name = "catalog/contacts.html"
+
+
+class HomeTemplateView(TemplateView):
+    """Выполняет переход к странице catalog/contacts.html"""
+
+    template_name = "catalog/home.html"
