@@ -1,9 +1,7 @@
 import os
 from django import forms
 from .models import Product
-from dotenv import load_dotenv
 from django.core.exceptions import ValidationError
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from PIL import Image
 
 FORBIDDEN_WORDS=['казино','криптовалюта','крипта','биржа','дешево','бесплатно','обман','полиция','радар']
