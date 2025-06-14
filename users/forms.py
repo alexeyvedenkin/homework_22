@@ -34,3 +34,9 @@ class CustomAuthenticationForm(StyleFormMixin, AuthenticationForm):
     class Meta:
         model = CustomUser
         fields = ('email', 'password')
+
+
+class UserProfileForm(StyleFormMixin, forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'phone_number', 'avatar', 'country']

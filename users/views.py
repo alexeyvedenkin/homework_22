@@ -1,12 +1,15 @@
 import secrets
 
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
+from django.views import View
+from django.views.generic import TemplateView
 from django.views.generic.edit import CreateView
 
-from .forms import CustomUserCreationForm, CustomAuthenticationForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm, UserProfileForm
 from .models import CustomUser
 
 from config.settings import EMAIL_HOST_USER
@@ -41,12 +44,42 @@ def email_verification(request, token):
     user.save()
     return redirect(reverse('users:login'))
 
-#
-# def login_view(request):
-#     form = CustomUserCreationForm()  # This will apply StyleFormMixin
-#     return render(request, 'users/login.html', {'form': form})
-
 
 class CustomLoginView(LoginView):
     authentication_form = CustomAuthenticationForm
     template_name = 'users/login.html'
+
+
+@login_required
+def edit_profile(request):
+    user = request.user
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile_success')
+    else:
+        form = UserProfileForm(instance=user)
+    return render(request, 'edit_profile.html', {'form': form})
+
+
+class ProfileSuccessView(TemplateView):
+    template_name = 'users/profile_success.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['message'] = 'Ваш профиль успешно обновлен!'
+        return context
+
+
+class EditProfileView(View):
+    def get(self, request):
+        form = UserProfileForm(instance=request.user)  # Предполагая, что у вас есть форма
+        return render(request, 'users/edit_profile.html', {'form': form})
+
+    def post(self, request):
+        form = UserProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('users:profile_success')  # Убедитесь, что используете именование с пространством
+        return render(request, 'users/templates/edit_profile.html', {'form': form})
