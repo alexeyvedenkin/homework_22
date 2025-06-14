@@ -1,13 +1,12 @@
-import os
 import secrets
 
+from django.contrib.auth.views import LoginView
 from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic.edit import CreateView
-from pyexpat.errors import messages
 
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from .models import CustomUser
 
 from config.settings import EMAIL_HOST_USER
@@ -41,3 +40,13 @@ def email_verification(request, token):
     user.is_active = True
     user.save()
     return redirect(reverse('users:login'))
+
+#
+# def login_view(request):
+#     form = CustomUserCreationForm()  # This will apply StyleFormMixin
+#     return render(request, 'users/login.html', {'form': form})
+
+
+class CustomLoginView(LoginView):
+    authentication_form = CustomAuthenticationForm
+    template_name = 'users/login.html'
