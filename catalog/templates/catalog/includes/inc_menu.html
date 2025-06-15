@@ -10,7 +10,8 @@
             <form id="logout-form" action="{% url 'users:logout' %}" method="POST" style="display: none;">
                 {% csrf_token %}
             </form>
-            <a class="p-2 btn btn-outline-primary me-2" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Выйти</a>
+            <a class="p-2 btn btn-outline-primary me-2" href="#" onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">Выйти</a>
         {% else %}
             <a class="p-2 btn btn-outline-primary me-2" href="/product_list/">Каталог</a>
             <a class="p-2 btn btn-outline-primary me-2" href="{% url 'users:login' %}">Войти</a>
