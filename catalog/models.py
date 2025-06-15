@@ -55,6 +55,9 @@ class Product(models.Model):
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
         ordering = ["category", "name"]
+        permissions = [
+            ("can_unpublish_product", "Can unpublish product"),
+        ]
 
     def __str__(self):
         return f"Наименование: {self.name}, цена: {self.price}"
