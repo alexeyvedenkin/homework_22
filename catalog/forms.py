@@ -1,12 +1,10 @@
 import os
 from django import forms
 from .models import Product
-from dotenv import load_dotenv
 from django.core.exceptions import ValidationError
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from PIL import Image
 
-load_dotenv(override=True)
+FORBIDDEN_WORDS=['казино','криптовалюта','крипта','биржа','дешево','бесплатно','обман','полиция','радар']
 
 class ProductForm(forms.ModelForm):
     class Meta:
@@ -49,14 +47,14 @@ class ProductForm(forms.ModelForm):
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
-        for elem in os.getenv('FORBIDDEN_WORDS'):
+        for elem in FORBIDDEN_WORDS:
             if elem in name:
                 raise ValidationError("В наименовании продукта не должно быть запрещенных слов")
         return name
 
     def clean_description(self):
         description = self.cleaned_data.get('description')
-        for elem in os.getenv('FORBIDDEN_WORDS'):
+        for elem in FORBIDDEN_WORDS:
             if elem in description:
                 raise ValidationError("В описании продукта не должно быть запрещенных слов")
         return description
@@ -65,6 +63,7 @@ class ProductForm(forms.ModelForm):
         price = self.cleaned_data.get('price')
         if price <= 0:
             raise ValidationError("Цена должна быть положительным числом")
+        return price
 
     def clean_product_image(self):
         product_image = self.cleaned_data.get('product_image')
