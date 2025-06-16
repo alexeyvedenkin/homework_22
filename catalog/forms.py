@@ -17,7 +17,6 @@ class ProductForm(forms.ModelForm):
             "product_image",
             'category',
             'is_published',
-            'owner'
         ]
 
     def __init__(self, *args, **kwargs):
@@ -58,10 +57,6 @@ class ProductForm(forms.ModelForm):
             'class': 'check-box'
         })
 
-        self.fields['owner'].widget.attrs.update({
-            'class': 'form-control',
-            'placeholder': 'Владелец товара'
-        })
 
     def clean_name(self):
         name = self.cleaned_data.get('name')

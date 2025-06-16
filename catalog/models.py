@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.db import models
 
 
@@ -58,6 +59,12 @@ class Product(models.Model):
         permissions = [
             ("can_unpublish_product", "Can unpublish product"),
         ]
+
+    def save(self, *args, **kwargs):
+        if not self.owner:
+            self.owner = get_user_model().objects.get(id=kwargs.pop('user_id'))
+        super().save(*args, **kwargs)
+
 
     def __str__(self):
         return f"Наименование: {self.name}, цена: {self.price}"
