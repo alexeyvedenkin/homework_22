@@ -14,6 +14,19 @@ from catalog.forms import ProductForm
 class ProductListView(ListView):
     model = Product
     context_object_name = 'products'
+    template_name = 'product_list.html'
+
+    def get_queryset(self):
+        return Product.objects.filter(is_published=True)
+
+class NonPublishedProductListView(ListView):
+    model = Product
+    context_object_name = 'non_published_products'
+    template_name = 'non_published_products.html'
+
+    def get_queryset(self):
+        return Product.objects.filter(is_published=False)
+
 
 class ProductDetailView(DetailView):
     model = Product
