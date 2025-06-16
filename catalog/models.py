@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 
@@ -35,6 +36,20 @@ class Product(models.Model):
     update_date = models.DateField(
         verbose_name="Дата последнего обновления", blank=True, null=True
     )
+
+    is_published = models.BooleanField(
+        default=False,
+        verbose_name="Опубликовано",
+        help_text="Укажите, опубликован ли товар"
+    )
+
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        verbose_name="Владелец",
+        help_text="Выберите владельца товара"
+    )
+
 
     class Meta:
         verbose_name = "Товар"
