@@ -2,8 +2,12 @@
 {% load my_tags %}
 {% block content %}
 <div class="container">
+    {% if user.is_authenticated %}
+        <p><a type="button" class="btn btn-lg btn-block btn-outline-primary"
+              href="{% url 'catalog:product_list' %}">Вернуться</a></p>
+    {% endif %}
     <div class="row text-center">
-        {% for product in object_list %}
+        {% for product in non_published_products %}
         <div class="col-3">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
