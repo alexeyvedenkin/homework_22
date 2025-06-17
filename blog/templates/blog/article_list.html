@@ -6,7 +6,10 @@
 </div>
 <div class="container">
     {% if user.is_authenticated %}
-    <p><a type="button" class="btn btn-lg btn-block btn-outline-primary" href="{% url 'blog:article_create' %}">Добавить статью</a></p>
+    <p><a type="button" class="btn btn-lg btn-block btn-outline-primary"
+          href="{% url 'blog:article_create' %}">Добавить статью</a></p>
+    <p><a type="button" class="btn btn-lg btn-block btn-outline-primary"
+          href="{% url 'blog:user_owned_articles' %}">Мои статьи</a></p>
     {% endif %}
     <div class="row text-center">
         {% for article in object_list %}

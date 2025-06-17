@@ -1,6 +1,7 @@
 import os
 
 from django.contrib.auth.decorators import login_required, permission_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect
 from dotenv import load_dotenv
 from django.core.mail import send_mail
@@ -76,6 +77,24 @@ class ArticleUpdateView(UpdateView):
 class ArticleDeleteView(DeleteView):
     model = Article
     success_url = reverse_lazy("blog:article_list")
+
+
+class UserOwnedArticleListView(LoginRequiredMixin, ListView):
+    model = Article
+    context_object_name = 'owned_articles'
+    template_name = 'blog/user_owned_article.html'
+
+    def get_queryset(self):
+        return Article.objects.filter(owner=self.request.user)
+
+
+class NonPublishedArticleListView(ListView):
+    model = Article
+    context_object_name = 'non_published_articles'
+    template_name = 'catalog/non_published_articles.html'
+
+    def get_queryset(self):
+        return Article.objects.filter(is_published=False)
 
 
 @login_required
