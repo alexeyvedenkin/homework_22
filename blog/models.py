@@ -29,6 +29,9 @@ class Article(models.Model):
         verbose_name = "Статья"
         verbose_name_plural = "Статьи"
         ordering = ["views_counter"]
+        permissions = [
+            ("can_unpublish_article", "Can unpublish article"),
+        ]
 
     def __str__(self):
         return self.title

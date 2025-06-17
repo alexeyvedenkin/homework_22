@@ -12,8 +12,6 @@ class ProductForm(forms.ModelForm):
             "name",
             "description",
             "price",
-            "create_date",
-            'update_date',
             "product_image",
             'category',
         ]
@@ -34,14 +32,6 @@ class ProductForm(forms.ModelForm):
         self.fields['price'].widget.attrs.update({
             'class': 'form-control',
             'placeholder': 'Введите цену товара'
-        })
-
-        self.fields['create_date'].widget.attrs.update({
-            'class': 'form-control'
-        })
-
-        self.fields['update_date'].widget.attrs.update({
-            'class': 'form-control'
         })
 
         self.fields['product_image'].widget.attrs.update({
