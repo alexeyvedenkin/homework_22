@@ -1,0 +1,95 @@
+{% extends 'catalog/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Мои статьи</h1>
+</div>
+<div class="container">
+    <h2 class="my-4">Опубликованные статьи</h2> <!-- Heading for published articles -->
+    {% if user.is_authenticated %}
+        <p><a type="button" class="btn btn-lg btn-block btn-outline-primary"
+              href="{% url 'catalog:article_list' %}">Вернуться</a></p>
+        <p><a type="button" class="btn btn-lg btn-block btn-outline-primary"
+              href="{% url 'catalog:article_create' %}">Добавить статью</a></p>
+    {% endif %}
+    <div class="row text-center">
+        {% for article in object_list %}
+            {% if article.is_published %} <!-- Check if article is published -->
+            <div class="col-3">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        {% if article.article_image %}
+                            <img src="{{ article.article_image | media_filter }}" width="150" style="height:auto;">
+                        {% else %}
+                            <p>Нет изображения</p>
+                        {% endif %}
+                        <h4 class="my-0 font-weight-normal">{{ article.name }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <h3 class="card-title pricing-card-title">{{ article.price }} р.</h3>
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                {% if user.is_authenticated %}
+                                    <a type="button" class="btn btn-lg btn-block btn-outline-primary w-100"
+                                       href="{% url 'catalog:article_detail' article.pk %}">Подробнее</a>
+                                    <a type="button" class="btn btn-lg btn-block btn-outline-primary w-100"
+                                       href="{% url 'catalog:article_update' article.pk %}">Редактировать</a>
+                                    <a type="button" class="btn btn-lg btn-block btn-outline-danger w-100"
+                                       href="{% url 'catalog:article_delete' article.pk %}">Удалить</a>
+                                    {% if perms.catalog.can_unpublish_article %}
+                                       <a type="button" class="btn btn-lg btn-block btn-outline-success w-100"
+                                          href="{% url 'catalog:publish_article' article.pk %}">Опубликовать статью</a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <h2 class="my-4">Неопубликованные статьи</h2> <!-- Heading for unpublished articles -->
+    <div class="row text-center">
+        {% for article in object_list %}
+            {% if not article.is_published %} <!-- Check if article is NOT published -->
+            <div class="col-3">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        {% if article.article_image %}
+                            <img src="{{ article.article_image | media_filter }}" width="150" style="height:auto;">
+                        {% else %}
+                            <p>Нет изображения</p>
+                        {% endif %}
+                        <h4 class="my-0 font-weight-normal">{{ article.name }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <h3 class="card-title pricing-card-title">{{ article.price }} р.</h3>
+                            <div class="col-2"></div>
+                            <div class="col-8">
+                                {% if user.is_authenticated %}
+                                    <a type="button" class="btn btn-lg btn-block btn-outline-primary w-100"
+                                       href="{% url 'catalog:article_detail' article.pk %}">Подробнее</a>
+                                    <a type="button" class="btn btn-lg btn-block btn-outline-primary w-100"
+                                       href="{% url 'catalog:article_update' article.pk %}">Редактировать</a>
+                                    <a type="button" class="btn btn-lg btn-block btn-outline-danger w-100"
+                                       href="{% url 'catalog:article_delete' article.pk %}">Удалить</a>
+                                    {% if perms.catalog.can_unpublish_article %}
+                                       <a type="button" class="btn btn-lg btn-block btn-outline-success w-100"
+                                          href="{% url 'catalog:publish_article' article.pk %}">Опубликовать товар</a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
