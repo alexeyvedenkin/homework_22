@@ -5,15 +5,14 @@ from django.db import models
 
 class Product(models.Model):
     name = models.CharField(
-        max_length=100, verbose_name="Товар", help_text="Введите наименование товара"
+        max_length=100, verbose_name="Товар"
     )
     description = models.TextField(
-        verbose_name="Описание", help_text="Введите описание товара"
+        verbose_name="Описание"
     )
     product_image = models.ImageField(
         upload_to="products/images",
         verbose_name="Изображение",
-        help_text="Загрузите изображение товара",
         blank=True,
         null=True,
     )
@@ -22,15 +21,13 @@ class Product(models.Model):
         on_delete=models.SET_NULL,
         max_length=100,
         verbose_name="Категория",
-        help_text="Введите категорию товара",
         blank=True,
         null=True,
         related_name="products",
     )
-    price = models.FloatField(verbose_name="Цена", help_text="Введите цену товара")
+    price = models.FloatField(verbose_name="Цена")
     create_date = models.DateField(
         verbose_name="Дата создания",
-        help_text="Введите дату создания товара",
         blank=True,
         null=True,
     )
@@ -40,21 +37,19 @@ class Product(models.Model):
 
     is_published = models.BooleanField(
         default=False,
-        verbose_name="Опубликовано",
-        help_text="Укажите, опубликован ли товар"
+        verbose_name="Опубликовано"
     )
 
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         verbose_name="Владелец",
-        help_text="Выберите владельца товара"
     )
 
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
-        ordering = ["category", "name"]
+        ordering = ["owner", "name"]
         permissions = [
             ("can_unpublish_product", "Can unpublish product"),
         ]

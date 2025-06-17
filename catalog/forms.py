@@ -16,7 +16,6 @@ class ProductForm(forms.ModelForm):
             'update_date',
             "product_image",
             'category',
-            'is_published',
         ]
 
     def __init__(self, *args, **kwargs):
@@ -51,10 +50,6 @@ class ProductForm(forms.ModelForm):
 
         self.fields['category'].widget.attrs.update({
             'class': 'form-control'
-        })
-
-        self.fields['is_published'].widget.attrs.update({
-            'class': 'check-box'
         })
 
 
