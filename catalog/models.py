@@ -51,7 +51,6 @@ class Product(models.Model):
         help_text="Выберите владельца товара"
     )
 
-
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
