@@ -8,7 +8,8 @@ from catalog.views import (
     ProductDeleteView,
     ContactsTemplateView,
     HomeTemplateView,
-    NonPublishedProductListView
+    NonPublishedProductListView,
+    UserOwnedProductListView
 )
 
 app_name = CatalogConfig.name
@@ -22,4 +23,5 @@ urlpatterns = [
     path("", HomeTemplateView.as_view(), name="home"),
     path("contacts/", ContactsTemplateView.as_view(), name="contacts"),
     path("non_published_products/", NonPublishedProductListView.as_view(), name="non_published_products"),
+    path('owned-products/', UserOwnedProductListView.as_view(), name='user_owned_products'),
 ]

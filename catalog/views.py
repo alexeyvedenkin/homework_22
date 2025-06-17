@@ -52,6 +52,15 @@ class ProductUpdateView(UpdateView):
     success_url = reverse_lazy("catalog:product_list")
 
 
+class UserOwnedProductListView(LoginRequiredMixin, ListView):
+    model = Product
+    context_object_name = 'owned_products'
+    template_name = 'catalog/user_owned_products.html'
+
+    def get_queryset(self):
+        return Product.objects.filter(owner=self.request.user)
+
+
 class ProductDeleteView(DeleteView):
     model = Product
     success_url = reverse_lazy("catalog:product_list")
