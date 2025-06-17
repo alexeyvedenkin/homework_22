@@ -77,6 +77,15 @@ def publish_product(request, product_id):
     return redirect('catalog:non_published_products')
 
 
+@login_required
+@permission_required('catalog.can_unpublish_product', raise_exception=True)
+def unpublish_product(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    product.is_published = False
+    product.save()
+    return redirect('catalog:non_published_products')
+
+
 class ContactsTemplateView(TemplateView):
     """Выполняет переход к странице catalog/contacts.html"""
 

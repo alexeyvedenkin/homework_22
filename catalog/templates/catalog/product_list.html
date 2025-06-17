@@ -8,12 +8,12 @@
     {% if user.is_authenticated %}
     <p><a type="button" class="btn btn-lg btn-block btn-outline-primary"
           href="{% url 'catalog:product_create' %}">Добавить товар</a></p>
-        {% if perms.catalog.can_unpublish_product %}
-        <p><a type="button" class="btn btn-lg btn-block btn-outline-primary"
-            href="{% url 'catalog:non_published_products' %}">Неопубликованные товары</a></p>
-        {% endif %}
     <p><a type="button" class="btn btn-lg btn-block btn-outline-primary"
           href="{% url 'catalog:user_owned_products' %}">Мои товары</a></p>
+    {% endif %}
+    {% if perms.catalog.can_unpublish_product %}
+        <p><a type="button" class="btn btn-lg btn-block btn-outline-primary"
+            href="{% url 'catalog:non_published_products' %}">Неопубликованные товары</a></p>
     {% endif %}
     <div class="row text-center">
         {% for product in products %}
@@ -28,17 +28,23 @@
                     <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
                 </div>
                 <div class="card-body">
-                    <h3 class="card-title pricing-card-title">{{ product.price }} р.</h3>
-                    {% if user.is_authenticated %}
-                    <a type="button" class="btn btn-lg btn-block btn-outline-primary"
-                       href="{% url 'catalog:product_detail' product.pk %}">Подробнее</a>
-                        {% if perms.catalog.can_unpublish_product %}
-                            <a type="button" class="btn btn-lg btn-block btn-outline-primary"
-                               href="{% url 'catalog:product_update' product.pk %}">Редактировать</a>
-                            <a type="button" class="btn btn-lg btn-block btn-outline-primary"
-                               href="{% url 'catalog:product_delete' product.pk %}">Удалить</a>
-                        {% endif %}
-                    {% endif %}
+                    <div class="row">
+                        <h3 class="card-title pricing-card-title">{{ product.price }} р.</h3>
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            {% if user.is_authenticated %}
+                                <a type="button" class="btn btn-lg btn-block btn-outline-primary w-100"
+                                    href="{% url 'catalog:product_detail' product.pk %}">Подробнее</a>
+                                {% if perms.catalog.can_unpublish_product %}
+                                    <a type="button" class="btn btn-lg btn-block btn-outline-danger w-100"
+                                        href="{% url 'catalog:product_delete' product.pk %}">Удалить</a>
+                                    <a type="button" class="btn btn-lg btn-block btn-outline-success w-100"
+                                        href="{% url 'catalog:unpublish_product' product.pk %}">Снять с продажи</a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
                 </div>
             </div>
         </div>
