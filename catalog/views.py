@@ -1,4 +1,6 @@
+from django.contrib.auth.decorators import permission_required, login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -64,6 +66,15 @@ class UserOwnedProductListView(LoginRequiredMixin, ListView):
 class ProductDeleteView(DeleteView):
     model = Product
     success_url = reverse_lazy("catalog:product_list")
+
+
+@login_required
+@permission_required('catalog.can_unpublish_product', raise_exception=True)
+def publish_product(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    product.is_published = True
+    product.save()
+    return redirect('catalog:non_published_products')
 
 
 class ContactsTemplateView(TemplateView):

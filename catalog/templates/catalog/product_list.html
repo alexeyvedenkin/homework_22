@@ -16,7 +16,7 @@
           href="{% url 'catalog:user_owned_products' %}">Мои товары</a></p>
     {% endif %}
     <div class="row text-center">
-        {% for product in object_list %}
+        {% for product in products %}
         <div class="col-3">
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
