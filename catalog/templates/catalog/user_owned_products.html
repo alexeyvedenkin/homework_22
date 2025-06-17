@@ -5,41 +5,68 @@
     <h1 class="display-4">Мои товары</h1>
 </div>
 <div class="container">
-    {% if user.is_authenticated %}
-    <p><a type="button" class="btn btn-lg btn-block btn-outline-primary"
-          href="{% url 'catalog:product_create' %}">Добавить товар</a></p>
-        {% if perms.catalog.can_unpublish_product %}
-        <p><a type="button" class="btn btn-lg btn-block btn-outline-primary"
-            href="{% url 'catalog:non_published_products' %}">Неопубликованные товары</a></p>
-        {% endif %}
-    {% endif %}
+    <h2 class="my-4">Опубликованные товары</h2> <!-- Heading for published products -->
     <div class="row text-center">
         {% for product in object_list %}
-        <div class="col-3">
-            <div class="card mb-4 box-shadow">
-                <div class="card-header">
-                    {% if product.product_image %}
-                        <img src="{{ product.product_image | media_filter }}" width="150" style="height:auto;">
-                    {% else %}
-                        <p>Нет изображения</p>
-                    {% endif %}
-                    <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
-                </div>
-                <div class="card-body">
-                    <h3 class="card-title pricing-card-title">{{ product.price }} р.</h3>
-                    {% if user.is_authenticated %}
-                    <a type="button" class="btn btn-lg btn-block btn-outline-primary"
-                       href="{% url 'catalog:product_detail' product.pk %}">Подробнее</a>
-                        {% if perms.catalog.can_unpublish_product %}
-                    <a type="button" class="btn btn-lg btn-block btn-outline-primary"
-                       href="{% url 'catalog:product_update' product.pk %}">Редактировать</a>
-                    <a type="button" class="btn btn-lg btn-block btn-outline-primary"
-                       href="{% url 'catalog:product_delete' product.pk %}">Удалить</a>
+            {% if product.is_published %} <!-- Check if product is published -->
+            <div class="col-3">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        {% if product.product_image %}
+                            <img src="{{ product.product_image | media_filter }}" width="150" style="height:auto;">
+                        {% else %}
+                            <p>Нет изображения</p>
                         {% endif %}
-                    {% endif %}
+                        <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title pricing-card-title">{{ product.price }} р.</h3>
+                        {% if user.is_authenticated %}
+                        <a type="button" class="btn btn-lg btn-block btn-outline-primary"
+                           href="{% url 'catalog:product_detail' product.pk %}">Подробнее</a>
+                        {% if perms.catalog.can_unpublish_product %}
+                        <a type="button" class="btn btn-lg btn-block btn-outline-primary"
+                           href="{% url 'catalog:product_update' product.pk %}">Редактировать</a>
+                        <a type="button" class="btn btn-lg btn-block btn-outline-primary"
+                           href="{% url 'catalog:product_delete' product.pk %}">Удалить</a>
+                        {% endif %}
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-        </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <h2 class="my-4">Неопубликованные товары</h2> <!-- Heading for unpublished products -->
+    <div class="row text-center">
+        {% for product in object_list %}
+            {% if not product.is_published %} <!-- Check if product is NOT published -->
+            <div class="col-3">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        {% if product.product_image %}
+                            <img src="{{ product.product_image | media_filter }}" width="150" style="height:auto;">
+                        {% else %}
+                            <p>Нет изображения</p>
+                        {% endif %}
+                        <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title pricing-card-title">{{ product.price }} р.</h3>
+                        {% if user.is_authenticated %}
+                        <a type="button" class="btn btn-lg btn-block btn-outline-primary"
+                           href="{% url 'catalog:product_detail' product.pk %}">Подробнее</a>
+                        {% if perms.catalog.can_unpublish_product %}
+                        <a type="button" class="btn btn-lg btn-block btn-outline-primary"
+                           href="{% url 'catalog:product_update' product.pk %}">Редактировать</a>
+                        <a type="button" class="btn btn-lg btn-block btn-outline-primary"
+                           href="{% url 'catalog:product_delete' product.pk %}">Удалить</a>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         {% endfor %}
     </div>
 </div>
