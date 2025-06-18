@@ -1,5 +1,6 @@
-from django.conf import settings
 from django.db import models
+
+from users.models import CustomUser
 
 
 class Article(models.Model):
@@ -25,16 +26,11 @@ class Article(models.Model):
     views_counter = models.PositiveIntegerField(
         verbose_name="Количество просмотров", default=0
     )
-    author = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        verbose_name="Автор",
-    )
 
     class Meta:
         verbose_name = "Статья"
         verbose_name_plural = "Статьи"
-        ordering = ["author", "views_counter"]
+        ordering = ["views_counter"]
 
     def __str__(self):
         return self.title
