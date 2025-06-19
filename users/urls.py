@@ -9,7 +9,7 @@ app_name = UsersConfig.name
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', CustomLoginView.as_view(template_name='users/login.html', success_url='/catalog/product_list/'), name='login'),
-    path('logout/', LogoutView.as_view(next_page='catalog:product_list'), name='logout'),
+    path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('email-confirm/<str:token>/', email_verification, name='email-confirm'),
     path('edit_profile/', EditProfileView.as_view(), name='edit_profile'),
     path('profile/success/', login_required(ProfileSuccessView.as_view()), name='profile_success'),

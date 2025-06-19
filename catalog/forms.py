@@ -1,4 +1,3 @@
-import os
 from django import forms
 from .models import Product
 from django.core.exceptions import ValidationError
@@ -9,7 +8,13 @@ FORBIDDEN_WORDS=['казино','криптовалюта','крипта','би�
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ["name", "description", "price", "create_date", 'update_date', "product_image", 'category',]
+        fields = [
+            "name",
+            "description",
+            "price",
+            "product_image",
+            'category',
+        ]
 
     def __init__(self, *args, **kwargs):
         super(ProductForm, self).__init__(*args, **kwargs)
@@ -29,14 +34,6 @@ class ProductForm(forms.ModelForm):
             'placeholder': 'Введите цену товара'
         })
 
-        self.fields['create_date'].widget.attrs.update({
-            'class': 'form-control'
-        })
-
-        self.fields['update_date'].widget.attrs.update({
-            'class': 'form-control'
-        })
-
         self.fields['product_image'].widget.attrs.update({
             'class': 'form-control'
         })
@@ -44,6 +41,7 @@ class ProductForm(forms.ModelForm):
         self.fields['category'].widget.attrs.update({
             'class': 'form-control'
         })
+
 
     def clean_name(self):
         name = self.cleaned_data.get('name')
