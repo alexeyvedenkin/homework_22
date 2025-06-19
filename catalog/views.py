@@ -11,8 +11,8 @@ from django.views.generic import (
     UpdateView,
 )
 
-from catalog.models import Product
-from catalog.forms import ProductForm
+from catalog.models import Product, Category
+from catalog.forms import ProductForm, CategoryForm
 from catalog.services import get_products_from_cache
 
 
@@ -101,3 +101,32 @@ class HomeTemplateView(TemplateView):
     """Выполняет переход к странице catalog/contacts.html"""
 
     template_name = "catalog/home.html"
+
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'catalog/category_list.html'
+    context_object_name = 'categories'
+
+
+class CategoryCreateView(LoginRequiredMixin, CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'catalog/category_form.html'
+    success_url = reverse_lazy("catalog:category_list")
+
+
+class CategoryUpdateView(UpdateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'catalog/category_form.html'
+    success_url = reverse_lazy("catalog:category_list")
+
+
+class CategoryDeleteView(DeleteView):
+    model = Category
+    success_url = reverse_lazy("catalog:category_list")
+
+
+class CategoryDetailView(DetailView):
+    model = Category
