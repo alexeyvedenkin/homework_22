@@ -13,6 +13,8 @@ from django.views.generic import (
 
 from catalog.models import Product
 from catalog.forms import ProductForm
+from catalog.services import get_products_from_cache
+
 
 class ProductListView(LoginRequiredMixin, ListView):
     model = Product
@@ -22,6 +24,9 @@ class ProductListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Product.objects.filter(is_published=True)
 
+    @staticmethod
+    def get_full_queryset():
+        return get_products_from_cache()
 
 class NonPublishedProductListView(ListView):
     model = Product
