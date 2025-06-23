@@ -21,10 +21,10 @@
                         <div class="col-8">
                             {% if user.is_authenticated %}
                                 <a type="button" class="btn btn-lg btn-block btn-outline-primary w-100"
-                                   href="{% url 'catalog:category_detail' category.pk %}">Подробнее</a>
+                                   href="{% url 'catalog:category_detail' category.id %}">Подробнее</a>
                                 {% if perms.catalog.can_unpublish_product %}
                                     <a type="button" class="btn btn-lg btn-block btn-outline-danger w-100"
-                                       href="{% url 'catalog:category_delete' category.pk %}">Удалить</a>
+                                       href="{% url 'catalog:category_delete' category.id %}">Удалить</a>
                                 {% endif %}
                             {% endif %}
                         </div>

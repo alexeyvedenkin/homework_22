@@ -13,7 +13,7 @@ from django.views.generic import (
 
 from catalog.models import Product, Category
 from catalog.forms import ProductForm, CategoryForm
-from catalog.services import get_products_from_cache
+from catalog.services import CategoryDetail
 
 
 class ProductListView(LoginRequiredMixin, ListView):
@@ -26,7 +26,7 @@ class ProductListView(LoginRequiredMixin, ListView):
 
     @staticmethod
     def get_full_queryset():
-        return get_products_from_cache()
+        return CategoryDetail.get_products_from_cache()
 
 class NonPublishedProductListView(ListView):
     model = Product
@@ -123,10 +123,21 @@ class CategoryUpdateView(UpdateView):
     success_url = reverse_lazy("catalog:category_list")
 
 
+
 class CategoryDeleteView(DeleteView):
     model = Category
     success_url = reverse_lazy("catalog:category_list")
 
 
 class CategoryDetailView(DetailView):
+    """Отображает детали выбранной категории, включая продукты"""
     model = Category
+    template_name = 'catalog/category_detail.html'  # Specify your template name
+    context_object_name = 'category'  # Context variable name for the category
+
+    def get_context_data(self, **kwargs):
+        """Add products to the context based on the category"""
+        context = super().get_context_data(**kwargs)
+
+        context['products'] = CategoryDetail.get_products_list_from_category(self.object.id)
+        return context

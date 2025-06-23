@@ -11,7 +11,8 @@ from catalog.views import (
     ContactsTemplateView,
     HomeTemplateView,
     NonPublishedProductListView,
-    UserOwnedProductListView, publish_product, unpublish_product
+    UserOwnedProductListView, publish_product, unpublish_product, CategoryListView, CategoryCreateView,
+    CategoryUpdateView, CategoryDeleteView, CategoryDetailView
 )
 
 app_name = CatalogConfig.name
@@ -28,4 +29,11 @@ urlpatterns = [
     path('owned-products/', UserOwnedProductListView.as_view(), name='user_owned_products'),
     path('product/<int:product_id>/publish/', publish_product, name='publish_product'),
     path('product/<int:product_id>/unpublish/', unpublish_product, name='unpublish_product'),
+
+    path('categories/', CategoryListView.as_view(), name='category_list'),
+    path("category_create/", CategoryCreateView.as_view(), name="category_create"),
+
+    path("category/<int:pk>/update/", CategoryUpdateView.as_view(), name="category_update"),
+    path("category/<int:pk>/delete/", CategoryDeleteView.as_view(), name="category_delete"),
+    path('category/<int:pk>/', CategoryDetailView.as_view(), name='category_detail'),
 ]
