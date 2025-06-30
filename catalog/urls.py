@@ -1,4 +1,6 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page
+
 from catalog.apps import CatalogConfig
 from catalog.views import (
     ProductListView,
@@ -9,14 +11,15 @@ from catalog.views import (
     ContactsTemplateView,
     HomeTemplateView,
     NonPublishedProductListView,
-    UserOwnedProductListView, publish_product, unpublish_product
+    UserOwnedProductListView, publish_product, unpublish_product, CategoryListView, CategoryCreateView,
+    CategoryUpdateView, CategoryDeleteView, CategoryDetailView
 )
 
 app_name = CatalogConfig.name
 
 urlpatterns = [
     path("product_list/", ProductListView.as_view(), name="product_list"),
-    path("product_detail/<int:pk>/", ProductDetailView.as_view(), name="product_detail"),
+    path("product_detail/<int:pk>/", cache_page(60 * 15)(ProductDetailView.as_view()), name="product_detail"),
     path("product_create/", ProductCreateView.as_view(), name="product_create"),
     path("product/<int:pk>/update/", ProductUpdateView.as_view(), name="product_update"),
     path("product/<int:pk>/delete/", ProductDeleteView.as_view(), name="product_delete"),
@@ -26,4 +29,11 @@ urlpatterns = [
     path('owned-products/', UserOwnedProductListView.as_view(), name='user_owned_products'),
     path('product/<int:product_id>/publish/', publish_product, name='publish_product'),
     path('product/<int:product_id>/unpublish/', unpublish_product, name='unpublish_product'),
+
+    path('categories/', CategoryListView.as_view(), name='category_list'),
+    path("category_create/", CategoryCreateView.as_view(), name="category_create"),
+
+    path("category/<int:pk>/update/", CategoryUpdateView.as_view(), name="category_update"),
+    path("category/<int:pk>/delete/", CategoryDeleteView.as_view(), name="category_delete"),
+    path('category/<int:pk>/', CategoryDetailView.as_view(), name='category_detail'),
 ]

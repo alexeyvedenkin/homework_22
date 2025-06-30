@@ -7,6 +7,8 @@
 <div class="container">
     {% if user.is_authenticated %}
     <p><a type="button" class="btn btn-lg btn-block btn-outline-primary"
+          href="{% url 'catalog:category_list' %}">Категории товаров</a></p>
+    <p><a type="button" class="btn btn-lg btn-block btn-outline-primary"
           href="{% url 'catalog:product_create' %}">Добавить товар</a></p>
     <p><a type="button" class="btn btn-lg btn-block btn-outline-primary"
           href="{% url 'catalog:user_owned_products' %}">Мои товары</a></p>

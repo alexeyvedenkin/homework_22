@@ -11,8 +11,10 @@ from django.views.generic import (
     UpdateView,
 )
 
-from catalog.models import Product
-from catalog.forms import ProductForm
+from catalog.models import Product, Category
+from catalog.forms import ProductForm, CategoryForm
+from catalog.services import CategoryDetail
+
 
 class ProductListView(LoginRequiredMixin, ListView):
     model = Product
@@ -22,6 +24,9 @@ class ProductListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return Product.objects.filter(is_published=True)
 
+    @staticmethod
+    def get_full_queryset():
+        return CategoryDetail.get_products_from_cache()
 
 class NonPublishedProductListView(ListView):
     model = Product
@@ -96,3 +101,43 @@ class HomeTemplateView(TemplateView):
     """Выполняет переход к странице catalog/contacts.html"""
 
     template_name = "catalog/home.html"
+
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'catalog/category_list.html'
+    context_object_name = 'categories'
+
+
+class CategoryCreateView(LoginRequiredMixin, CreateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'catalog/category_form.html'
+    success_url = reverse_lazy("catalog:category_list")
+
+
+class CategoryUpdateView(UpdateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = 'catalog/category_form.html'
+    success_url = reverse_lazy("catalog:category_list")
+
+
+
+class CategoryDeleteView(DeleteView):
+    model = Category
+    success_url = reverse_lazy("catalog:category_list")
+
+
+class CategoryDetailView(DetailView):
+    """Отображает детали выбранной категории, включая продукты"""
+    model = Category
+    template_name = 'catalog/category_detail.html'  # Specify your template name
+    context_object_name = 'category'  # Context variable name for the category
+
+    def get_context_data(self, **kwargs):
+        """Add products to the context based on the category"""
+        context = super().get_context_data(**kwargs)
+
+        context['products'] = CategoryDetail.get_products_list_from_category(self.object.id)
+        return context

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product
+from .models import Product, Category
 from django.core.exceptions import ValidationError
 from PIL import Image
 
@@ -77,3 +77,25 @@ class ProductForm(forms.ModelForm):
                 raise ValidationError("Размер изображения не должен превышать 5 МБ.")
 
         return product_image
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = [
+            "name",
+            "description",
+        ]
+
+    def __init__(self, *args, **kwargs):
+        super(CategoryForm, self).__init__(*args, **kwargs)
+
+        self.fields['name'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Введите наименование категории'
+        })
+
+        self.fields['description'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Введите описание категории'
+        })

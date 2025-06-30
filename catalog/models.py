@@ -5,10 +5,10 @@ from django.db import models
 
 class Product(models.Model):
     name = models.CharField(
-        max_length=100, verbose_name="Товар"
+        max_length=100, verbose_name="Товар",
     )
     description = models.TextField(
-        verbose_name="Описание"
+        verbose_name="Описание",
     )
     product_image = models.ImageField(
         upload_to="products/images",
